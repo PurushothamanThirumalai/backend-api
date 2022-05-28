@@ -1,17 +1,37 @@
 const express = require('express')
 const users = require('./data/users.json')
+const fs = require('fs')
+
 
 const app = express()
 
+app.use(express.json())
+
+//GET https://localhost:3000/api/users
 app.get('/api/users', (req, res) => {
-    res.send(JSON.stringify(users))
+
+    fs.readFile('./data/users.json', 'utf8', (err,data) => {
+
+        if (err) return res.status(500).send('something went wrong, try again! Details:'+err.message)
+        res.send(data)
+    })
+
 })
 
+//POST https://localhost:3000/api/users
 app.post('/api/users', (req, res) => {
 
-    users.push(req.body)
+let temp_users=[...users]
 
-    res.send('User saved in json file')
+    let data =req.body
+    temp_users.push(data)
+    
+    fs.writeFile('./data/users.json', JSON.stringify(temp_users), 'utf8', (err) => {
+
+        if (err) return res.status(500).send('something went wrong, try again! Details:'+err.message)
+        res.send('User saved in json file')
+    })
+
 })
 
 
