@@ -1,11 +1,12 @@
 const express = require('express')
 const users = require('./data/users.json')
 const fs = require('fs')
-
+const cors=require('cors')
 
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 //GET https://localhost:3000/api/users
 app.get('/api/users', (req, res) => {
