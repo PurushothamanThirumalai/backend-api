@@ -8,7 +8,7 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-//GET https://localhost:3000/api/users
+//GET http://localhost:3000/api/users
 app.get('/api/users', (req, res) => {
 
     fs.readFile('./data/users.json', 'utf8', (err,data) => {
